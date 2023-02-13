@@ -9,10 +9,11 @@ import { CodeElement } from './utils/elements/code-element'
 import { CustomEditor } from './utils/custom-editor'
 import { Toolbar } from './toolbar'
 import { SpecialElement } from './utils/elements/special-element'
+import { withHistory } from 'slate-history'
 
 
 export const SlateTextEditor = () => {
-  const [editor] = useState(() => withReact(createEditor()))
+  const [editor] = useState(() => withReact(withHistory(createEditor())))  
   const [textValue, setTextValue] = useState<Descendant[]>(initialValue);
 
   const renderElement = useCallback((props: RenderElementProps) => {
@@ -258,5 +259,13 @@ const initialValue: Descendant[] = [
            "text": "noice!"
         }
      ]
-  }
+  },
+  {
+    "type": "paragraph",
+    "children": [
+       {
+          "text": "Try redo / undo"
+       }
+    ]
+ },
 ]
