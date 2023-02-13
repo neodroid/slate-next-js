@@ -11,12 +11,17 @@ type CodeElement = {
   children: CustomText[];
 };
 
+type SpecialElement = {
+  type: 'special';
+  children: CustomText[];
+};
+
 type ButtonElement = {
   type: 'button';
   children: CustomText[];
 };
 
-type CustomElement = ParagraphElement | CodeElement
+type CustomElement = ParagraphElement | CodeElement | SpecialElement
 type CustomEditor = BaseEditor & ReactEditor;
 
 type CustomText = {
@@ -60,7 +65,13 @@ export const CustomEditor = {
     const [match] = Array.from(Editor.nodes(editor, {
       match: (n: any) => Element.isElement(n) && n.type === 'code',
     }))
+    return !!match
+  },
 
+  isSpecialActive(editor: CustomEditor) {
+    const [match] = Array.from(Editor.nodes(editor, {
+      match: (n: any) => Element.isElement(n) && n.type === 'special',
+    }))
     return !!match
   },
 
@@ -104,6 +115,15 @@ export const CustomEditor = {
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'code' },
+      { match: n => Editor.isBlock(editor, n as any), mode: "all" }
+    );
+  },
+
+  toggleSpecialBlock(editor: CustomEditor) {
+    const isActive = CustomEditor.isSpecialActive(editor)
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? 'paragraph' : 'special' },
       { match: n => Editor.isBlock(editor, n as any), mode: "all" }
     );
   },
