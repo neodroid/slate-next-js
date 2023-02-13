@@ -1,36 +1,7 @@
-import { Transforms, Editor, Text, BaseEditor, Element } from 'slate'
-import { ReactEditor } from 'slate-react'
+import { Transforms, Editor, Text, Element } from 'slate'
+import { CustomEditor, CustomElement, CustomText } from './types'
 
-type ParagraphElement = {
-  type: 'paragraph';
-  children: CustomText[];
-};
 
-type CodeElement = {
-  type: 'code';
-  children: CustomText[];
-};
-
-type SpecialElement = {
-  type: 'special';
-  children: CustomText[];
-};
-
-type ButtonElement = {
-  type: 'button';
-  children: CustomText[];
-};
-
-type CustomElement = ParagraphElement | CodeElement | SpecialElement
-type CustomEditor = BaseEditor & ReactEditor;
-
-type CustomText = {
-  text: string;
-  bold?: true | null;
-  italic?: true | null;
-  underline?: true | null;
-  color?: number | null;
-};
 declare module 'slate' {
   interface CustomTypes {
     Editor: CustomEditor
@@ -39,8 +10,7 @@ declare module 'slate' {
   }
 }
 
-
-export const CustomEditor = {
+export const CustomEditorFunctions = {
   isBoldActive(editor: CustomEditor) {
     const marks = Editor.marks(editor);
     return marks ? marks.bold === true : false;
@@ -76,7 +46,7 @@ export const CustomEditor = {
   },
 
   toggleBoldMark(editor: CustomEditor) {
-    const isActive = CustomEditor.isBoldActive(editor)
+    const isActive = CustomEditorFunctions.isBoldActive(editor)
     Transforms.setNodes(
       editor,
       { bold: isActive ? null : true },
@@ -85,7 +55,7 @@ export const CustomEditor = {
   },
 
   toggleUnderlineMark(editor: CustomEditor) {
-    const isActive = CustomEditor.isUnderlineActive(editor)
+    const isActive = CustomEditorFunctions.isUnderlineActive(editor)
     Transforms.setNodes(
       editor,
       { underline: isActive ? null : true },
@@ -94,7 +64,7 @@ export const CustomEditor = {
   },
 
   toggleItalicMark(editor: CustomEditor) {
-    const isActive = CustomEditor.isItalicActive(editor)
+    const isActive = CustomEditorFunctions.isItalicActive(editor)
     Transforms.setNodes(
       editor,
       { italic: isActive ? null : true },
@@ -111,7 +81,7 @@ export const CustomEditor = {
   },
 
   toggleCodeBlock(editor: CustomEditor) {
-    const isActive = CustomEditor.isCodeBlockActive(editor)
+    const isActive = CustomEditorFunctions.isCodeBlockActive(editor)
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'code' },
@@ -120,7 +90,7 @@ export const CustomEditor = {
   },
 
   toggleSpecialBlock(editor: CustomEditor) {
-    const isActive = CustomEditor.isSpecialActive(editor)
+    const isActive = CustomEditorFunctions.isSpecialActive(editor)
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'special' },

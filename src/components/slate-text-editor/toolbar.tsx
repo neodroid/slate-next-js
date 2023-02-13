@@ -1,6 +1,6 @@
 import { useSlate } from "slate-react";
 import styles from "../../styles/Home.module.css"
-import { CustomEditor } from "./utils/custom-editor"
+import { CustomEditorFunctions } from "./utils/custom-editor"
 import { FaUnderline, FaBold, FaItalic } from "react-icons/fa";
 import { BiFontColor } from "react-icons/bi";
 
@@ -14,17 +14,17 @@ const colorMap = [
 
 export const Toolbar = () => {
   const editor = useSlate();
-  const isBoldActive = CustomEditor.isBoldActive(editor)
-  const isUnderlineActive = CustomEditor.isUnderlineActive(editor)
-  const isItalicActive = CustomEditor.isItalicActive(editor)
-  const currentActiveColor = CustomEditor.currentActiveColor(editor)
-  const isCodeBlockActive = CustomEditor.isCodeBlockActive(editor)
-  const isSpecialActive = CustomEditor.isSpecialActive(editor)
+  const isBoldActive = CustomEditorFunctions.isBoldActive(editor)
+  const isUnderlineActive = CustomEditorFunctions.isUnderlineActive(editor)
+  const isItalicActive = CustomEditorFunctions.isItalicActive(editor)
+  const currentActiveColor = CustomEditorFunctions.currentActiveColor(editor)
+  const isCodeBlockActive = CustomEditorFunctions.isCodeBlockActive(editor)
+  const isSpecialActive = CustomEditorFunctions.isSpecialActive(editor)
 
   const marks = [
-    { name: "bold", active: isBoldActive, toggle: CustomEditor.toggleBoldMark },
-    { name: "underline", active: isUnderlineActive, toggle: CustomEditor.toggleUnderlineMark },
-    { name: "italic", active: isItalicActive, toggle: CustomEditor.toggleItalicMark },
+    { name: "bold", active: isBoldActive, toggle: CustomEditorFunctions.toggleBoldMark },
+    { name: "underline", active: isUnderlineActive, toggle: CustomEditorFunctions.toggleUnderlineMark },
+    { name: "italic", active: isItalicActive, toggle: CustomEditorFunctions.toggleItalicMark },
   ];
 
 
@@ -54,7 +54,7 @@ export const Toolbar = () => {
                 className={color.className}
                 onMouseDown={event => {
                   event.preventDefault();
-                  CustomEditor.toggleChangeColorMark(editor, color.key);
+                  CustomEditorFunctions.toggleChangeColorMark(editor, color.key);
                 }}
               >
                 {/* <FaUnderline /> */}
@@ -68,7 +68,7 @@ export const Toolbar = () => {
           className={isCodeBlockActive ? styles.active_toolbar_button : styles.default_toolbar_button}
           onMouseDown={event => {
             event.preventDefault()
-            CustomEditor.toggleCodeBlock(editor)
+            CustomEditorFunctions.toggleCodeBlock(editor)
           }}
         >
           Code Block
@@ -77,7 +77,7 @@ export const Toolbar = () => {
           className={isSpecialActive ? styles.active_toolbar_button : styles.default_toolbar_button}
           onMouseDown={event => {
             event.preventDefault()
-            CustomEditor.toggleSpecialBlock(editor)
+            CustomEditorFunctions.toggleSpecialBlock(editor)
           }}
         >
           Special Block
