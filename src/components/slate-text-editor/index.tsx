@@ -11,6 +11,7 @@ import { Toolbar } from './toolbar'
 import { SpecialElement } from './utils/elements/special-element'
 import { withHistory } from 'slate-history'
 import { initialValue } from './utils/initialValue'
+import { ButtonElement } from './utils/elements/button-element'
 
 
 export const SlateTextEditor = () => {
@@ -23,6 +24,8 @@ export const SlateTextEditor = () => {
         return <CodeElement {...props} />
       case 'special':
         return <SpecialElement {...props} />
+      case 'button':
+        return <ButtonElement {...props} />
       default:
         return <DefaultElement {...props} />
     }

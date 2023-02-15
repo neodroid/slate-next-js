@@ -45,6 +45,13 @@ export const CustomEditorFunctions = {
     return !!match
   },
 
+  isButtonBlockActive(editor: CustomEditor) {
+    const [match] = Array.from(Editor.nodes(editor, {
+      match: (n: any) => Element.isElement(n) && n.type === 'button',
+    }))
+    return !!match
+  },
+
   toggleBoldMark(editor: CustomEditor) {
     const isActive = CustomEditorFunctions.isBoldActive(editor)
     Transforms.setNodes(
@@ -85,7 +92,7 @@ export const CustomEditorFunctions = {
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'code' },
-      { match: n => Editor.isBlock(editor, n as any), mode: "all" }
+      { match: n => Editor.isBlock(editor, n as any), mode: 'all' }
     );
   },
 
@@ -94,7 +101,18 @@ export const CustomEditorFunctions = {
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'special' },
-      { match: n => Editor.isBlock(editor, n as any), mode: "all" }
+      { match: n => Editor.isBlock(editor, n as any), mode: 'all' }
+    );
+  },
+
+  toggleButtonBlock(editor: CustomEditor) {
+    const isActive = CustomEditorFunctions.isButtonBlockActive(editor)
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? 'paragraph' : 'button',
+        logText: 'enter log'
+    },
+      { match: n => Editor.isBlock(editor, n as any), mode: 'all' }
     );
   },
 }

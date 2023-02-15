@@ -20,6 +20,8 @@ export const Toolbar = () => {
   const currentActiveColor = CustomEditorFunctions.currentActiveColor(editor)
   const isCodeBlockActive = CustomEditorFunctions.isCodeBlockActive(editor)
   const isSpecialActive = CustomEditorFunctions.isSpecialActive(editor)
+  const isButtonBlockActive = CustomEditorFunctions.isButtonBlockActive(editor)
+
 
   const marks = [
     { name: "bold", active: isBoldActive, toggle: CustomEditorFunctions.toggleBoldMark },
@@ -81,6 +83,15 @@ export const Toolbar = () => {
           }}
         >
           Special Block
+        </button>
+        <button
+          className={isButtonBlockActive ? styles.active_toolbar_button : styles.default_toolbar_button}
+          onMouseDown={event => {
+            event.preventDefault()
+            CustomEditorFunctions.toggleButtonBlock(editor)
+          }}
+        >
+          Button Block
         </button>
       </div>
 

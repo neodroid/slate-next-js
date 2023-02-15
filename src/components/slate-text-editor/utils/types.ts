@@ -13,15 +13,17 @@ export type CodeElement = {
 
 export type SpecialElement = {
     type: 'special';
+    color? : number | null;
     children: CustomText[];
 };
 
 export type ButtonElement = {
     type: 'button';
+    logText?: "enter log";
     children: CustomText[];
 };
 
-export type CustomElement = ParagraphElement | CodeElement | SpecialElement
+export type CustomElement = ButtonElement | CodeElement | SpecialElement  | ParagraphElement
 export type CustomEditor = BaseEditor & ReactEditor;
 
 export type CustomText = {
