@@ -13,13 +13,13 @@ export type CodeElement = {
 
 export type SpecialElement = {
     type: 'special';
-    color? : number | null;
+    color: number | 0;
     children: CustomText[];
 };
 
 export type ButtonElement = {
     type: 'button';
-    logText?: "enter log";
+    logText: string;
     children: CustomText[];
 };
 

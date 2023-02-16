@@ -1,11 +1,17 @@
 import { Transforms, Editor, Text, Element } from 'slate'
-import { CustomEditor, CustomElement, CustomText } from './types'
+import { ButtonElement, CustomEditor, CustomElement, CustomText } from './types'
 
 
 declare module 'slate' {
   interface CustomTypes {
     Editor: CustomEditor
     Element: CustomElement
+    // Element:
+    //   | { type: "button"; logText: string; children: CustomText[] }
+    //   | { type: "paragraph"; children: CustomText[] }
+    //   | { type: "code";children: CustomText[] }
+    //   | { type: "special"; color? : number | null; children: CustomText[] }
+      
     Text: CustomText
   }
 }
@@ -50,6 +56,18 @@ export const CustomEditorFunctions = {
       match: (n: any) => Element.isElement(n) && n.type === 'button',
     }))
     return !!match
+  },
+
+  currentButtonBlockLog(editor: CustomEditor) {
+    const [match] = Array.from(Editor.nodes(editor, {
+      match: (n: any) => Element.isElement(n) && n.type === 'button',
+    }))
+    if (match) {
+      return (match[0] as ButtonElement).logText || ''
+    } else {
+      return ''
+    }
+    // return (match as ButtonElement).logText
   },
 
   toggleBoldMark(editor: CustomEditor) {
@@ -110,7 +128,17 @@ export const CustomEditorFunctions = {
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'button',
-        logText: 'enter log'
+        logText: 'Enter log text'
+    },
+      { match: n => Editor.isBlock(editor, n as any), mode: 'all' }
+    );
+  },
+
+  changeButtonBlockText(editor: CustomEditor, text: string | '') {
+    Transforms.setNodes(
+      editor,
+      { 
+        logText: text
     },
       { match: n => Editor.isBlock(editor, n as any), mode: 'all' }
     );

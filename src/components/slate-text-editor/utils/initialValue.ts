@@ -186,7 +186,8 @@ export const initialValue: Descendant[] = [
              "color": 0,
              "text": "noice!"
           }
-       ]
+       ],
+       "color": 0
     },
     {
       "type": "paragraph",
@@ -196,4 +197,31 @@ export const initialValue: Descendant[] = [
          }
       ]
    },
+   {
+      "type": "button",
+      "children": [
+         {
+            "text": "click this",
+         }
+      ],
+      "logText": "hello!!!"
+   },
+   {
+      "type": "paragraph",
+      "children": [
+         {
+            "text": "(check console logs)",
+            "bold": true
+         }
+      ]
+   },
+   {
+      "type": "button",
+      "logText": "another hello!",
+      "children": [
+         {
+            "text": "click meee!!!!"
+         }
+      ]
+   }
   ]

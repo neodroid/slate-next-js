@@ -3,6 +3,7 @@ import styles from "../../styles/Home.module.css"
 import { CustomEditorFunctions } from "./utils/custom-editor"
 import { FaUnderline, FaBold, FaItalic } from "react-icons/fa";
 import { BiFontColor } from "react-icons/bi";
+import { useEffect, useState } from "react";
 
 const colorMap = [
   { key: 0, color: "black", className: styles.black_button },
@@ -13,6 +14,8 @@ const colorMap = [
 
 
 export const Toolbar = () => {
+  const [buttonValue, setButtonValue] = useState("");
+
   const editor = useSlate();
   const isBoldActive = CustomEditorFunctions.isBoldActive(editor)
   const isUnderlineActive = CustomEditorFunctions.isUnderlineActive(editor)
@@ -21,7 +24,7 @@ export const Toolbar = () => {
   const isCodeBlockActive = CustomEditorFunctions.isCodeBlockActive(editor)
   const isSpecialActive = CustomEditorFunctions.isSpecialActive(editor)
   const isButtonBlockActive = CustomEditorFunctions.isButtonBlockActive(editor)
-
+  const currentButtonLogText = CustomEditorFunctions.currentButtonBlockLog(editor)
 
   const marks = [
     { name: "bold", active: isBoldActive, toggle: CustomEditorFunctions.toggleBoldMark },
@@ -29,9 +32,14 @@ export const Toolbar = () => {
     { name: "italic", active: isItalicActive, toggle: CustomEditorFunctions.toggleItalicMark },
   ];
 
+  useEffect(() => {
+    setButtonValue(currentButtonLogText);
+  }, [currentButtonLogText]);
+
 
   return (
     <div className={styles.toolbar}>
+      <div>
       <div className={styles.flex}>
         {marks.map(mark => (
           <button
@@ -94,8 +102,23 @@ export const Toolbar = () => {
           Button Block
         </button>
       </div>
-
-
+      </div>
+      <div>
+        <div className={isButtonBlockActive ? styles.buttonInput : styles.hide}>
+          <p>console log text:</p>
+          <input 
+          value={buttonValue}
+          onChange={event => {
+          setButtonValue(event.target.value);
+         
+        }}/>
+        <button onClick={ () => {
+          CustomEditorFunctions.changeButtonBlockText(editor, buttonValue)
+        }
+        }>change</button>
+        </div>
+      </div>
+        
     </div>
   )
 }
