@@ -17,6 +17,7 @@ declare module 'slate' {
 }
 
 export const CustomEditorFunctions = {
+
   isBoldActive(editor: CustomEditor) {
     const marks = Editor.marks(editor);
     return marks ? marks.bold === true : false;
@@ -37,25 +38,11 @@ export const CustomEditorFunctions = {
     return marks && marks.color ? marks.color : null;
   },
 
-  isCodeBlockActive(editor: CustomEditor) {
+  isBlockActive(editor: CustomEditor, type: string) {
     const [match] = Array.from(Editor.nodes(editor, {
-      match: (n: any) => Element.isElement(n) && n.type === 'code',
+      match: (n: any) => Element.isElement(n) && n.type === type,
     }))
-    return !!match
-  },
-
-  isSpecialActive(editor: CustomEditor) {
-    const [match] = Array.from(Editor.nodes(editor, {
-      match: (n: any) => Element.isElement(n) && n.type === 'special',
-    }))
-    return !!match
-  },
-
-  isButtonBlockActive(editor: CustomEditor) {
-    const [match] = Array.from(Editor.nodes(editor, {
-      match: (n: any) => Element.isElement(n) && n.type === 'button',
-    }))
-    return !!match
+    return !!match;
   },
 
   currentButtonBlockLog(editor: CustomEditor) {
@@ -106,7 +93,7 @@ export const CustomEditorFunctions = {
   },
 
   toggleCodeBlock(editor: CustomEditor) {
-    const isActive = CustomEditorFunctions.isCodeBlockActive(editor)
+    const isActive = CustomEditorFunctions.isBlockActive(editor,'code')
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'code' },
@@ -115,7 +102,7 @@ export const CustomEditorFunctions = {
   },
 
   toggleSpecialBlock(editor: CustomEditor) {
-    const isActive = CustomEditorFunctions.isSpecialActive(editor)
+    const isActive = CustomEditorFunctions.isBlockActive(editor,'special')
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'special' },
@@ -124,7 +111,7 @@ export const CustomEditorFunctions = {
   },
 
   toggleButtonBlock(editor: CustomEditor) {
-    const isActive = CustomEditorFunctions.isButtonBlockActive(editor)
+    const isActive = CustomEditorFunctions.isBlockActive(editor,'button')
     Transforms.setNodes(
       editor,
       { type: isActive ? 'paragraph' : 'button',

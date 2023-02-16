@@ -21,9 +21,9 @@ export const Toolbar = () => {
   const isUnderlineActive = CustomEditorFunctions.isUnderlineActive(editor)
   const isItalicActive = CustomEditorFunctions.isItalicActive(editor)
   const currentActiveColor = CustomEditorFunctions.currentActiveColor(editor)
-  const isCodeBlockActive = CustomEditorFunctions.isCodeBlockActive(editor)
-  const isSpecialActive = CustomEditorFunctions.isSpecialActive(editor)
-  const isButtonBlockActive = CustomEditorFunctions.isButtonBlockActive(editor)
+  const isCodeBlockActive = CustomEditorFunctions.isBlockActive(editor,'code')
+  const isSpecialActive = CustomEditorFunctions.isBlockActive(editor,'special')
+  const isButtonBlockActive = CustomEditorFunctions.isBlockActive(editor,'button')
   const currentButtonLogText = CustomEditorFunctions.currentButtonBlockLog(editor)
 
   const marks = [
@@ -105,7 +105,7 @@ export const Toolbar = () => {
       </div>
       <div>
         <div className={isButtonBlockActive ? styles.buttonInput : styles.hide}>
-          <p>console log text:</p>
+          <p>alert text:</p>
           <input 
           value={buttonValue}
           onChange={event => {

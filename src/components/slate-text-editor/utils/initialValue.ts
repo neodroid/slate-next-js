@@ -210,8 +210,7 @@ export const initialValue: Descendant[] = [
       "type": "paragraph",
       "children": [
          {
-            "text": "(check console logs)",
-            "bold": true
+            "text": "or (you can change the alert message)",
          }
       ]
    },

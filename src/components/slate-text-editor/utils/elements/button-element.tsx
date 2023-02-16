@@ -6,9 +6,9 @@ export const ButtonElement = (props: RenderElementProps) => {
   return (
     <button {...props.attributes} className={styles.button_block} onClick={() => {
       if (props.element.type === "button") {
+        alert(props.element.logText)
         console.log(props.element.logText)
       }
-      
     }}>
       {props.children}
     </button>
